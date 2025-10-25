@@ -20,6 +20,11 @@ source .venv/bin/actiavte
 pip install -r requirements.txt
 ```
 
+### Installing the cluster
+```bash
+ansible-playbook -i inventory/hosts.yml cluster.yml
+```
+
 ## Customize Ansible vars
 
 Kubespray expects users to use one of the following variables sources for settings and customization:
@@ -33,6 +38,17 @@ Kubespray expects users to use one of the following variables sources for settin
 
 > [!IMPORTANT]
 > Extra vars are best used to override Azar internal variables, for instances, roles/vars/. Those vars are usually **not expected** (by Azar developers) to be modified by end users, and not part of Azar interface. Thus they can change, disappear, or break stuff unexpectedly.
+
+## Ansible tags
+
+The following tags are defined in playbooks:
+
+| Tag name                       | Used for                                              |
+|--------------------------------|-------------------------------------------------------|
+| chapar                         | Configuring Apadana apiserver                         |
+| satrap                         | Configuring Apadana agents                            |
+| spasaka                        | Configuring Apadana controller manager                |
+| common                         | Download and installing binaries                      |
 
 ## Example commands
 
