@@ -1,0 +1,15 @@
+# Ansible inventory
+inventory/*
+!inventory/group_vars/
+!inventory/sample.yml
+
+# dotenv
+.env
+
+# virtualenv
+.venv/
+venv/
+ENV/
+
+# macOS
+.DS_Store
