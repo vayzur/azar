@@ -1,0 +1,29 @@
+---
+- name: Install unzip
+  package:
+    name: unzip
+    state: present
+
+- name: Detect architecture
+  set_fact:
+    apadana_architecture:
+      x86_64: amd64
+      aarch64: arm64
+
+- name: Download Apadana binaries
+  get_url:
+    url: "https://github.com/vayzur/apadana/releases/download/{{ apadana_version }}/apadana-{{ apadana_architecture[ansible_architecture] | default(ansible_architecture) }}.zip"
+    dest: "/tmp/apadana.zip"
+    mode: 0644
+
+- name: Extract Apadana binaries
+  unarchive:
+    src: "/tmp/apadana.zip"
+    dest: "{{ bin_dir }}"
+    remote_src: true
+  changed_when: true
+
+- name: Clean up
+  file:
+    path: "/tmp/apadana.zip"
+    state: absent

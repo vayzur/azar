@@ -1,0 +1,28 @@
+---
+- name: Make Spasaka configuration directory
+  file:
+    path: "{{ apadana_config_dir }}/spasaka"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Make Spasaka configuration file
+  template:
+    src: spasaka.yml.j2
+    dest: "{{ apadana_config_dir }}/spasaka/spasaka.yml"
+    owner: root
+    group: root
+    mode: 0700
+  changed_when: true
+
+- name: Make Spasaka systemd service
+  template:
+    src: spasaka.service.j2
+    dest: "/etc/systemd/system/spasaka.service"
+    owner: root
+    group: root
+    mode: 0644
+  changed_when: true
+  notify:
+    - Restart spasaka

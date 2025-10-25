@@ -1,0 +1,12 @@
+---
+apadana_apiserver_port: 10200
+
+apadana_apiserver_cert_file: /etc/apadana/pki/chapar/server.crt
+apadana_apiserver_key_file: /etc/apadana/pki/chapar/server.key
+
+apadana_apiserver_prefork: false
+
+apadana_apiserver_etcd_tls: false
+apadana_apiserver_etcd_ca_file: "{{ apadana_config_dir }}/pki/etcd/ca.crt"
+apadana_apiserver_etcd_client_cert_file: "{{ apadana_config_dir }}/pki/etcd/chapar-etcd-client.crt"
+apadana_apiserver_etcd_client_key_file: "{{ apadana_config_dir }}/pki/etcd/chapar-etcd-client.key"

@@ -1,0 +1,7 @@
+---
+- name: Install and configure Satrap
+  hosts: apadana_node
+  strategy: free
+  become: true
+  roles:
+    - { role: satrap, tags: satrap }

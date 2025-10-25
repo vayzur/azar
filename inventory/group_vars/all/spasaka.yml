@@ -1,0 +1,9 @@
+---
+apadana_spasaka_etcd_tls: false
+apadana_spasaka_etcd_ca_file: "{{ apadana_config_dir }}/pki/etcd/ca.crt"
+apadana_spasaka_etcd_client_cert_file: "{{ apadana_config_dir }}/pki/etcd/spasaka-etcd-client.crt"
+apadana_spasaka_etcd_client_key_file: "{{ apadana_config_dir }}/pki/etcd/spasaka-etcd-client.key"
+
+# concurrentNodeSyncs: 5
+# nodeMonitorPeriod: 5s
+# nodeMonitorGracePeriod: 20s

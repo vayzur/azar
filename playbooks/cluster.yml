@@ -1,0 +1,6 @@
+---
+- import_playbook: facts.yml
+- import_playbook: common.yml
+- import_playbook: chapar.yml
+- import_playbook: spasaka.yml
+- import_playbook: satrap.yml

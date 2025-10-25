@@ -1,0 +1,15 @@
+---
+xray_address: 127.0.0.1
+xray_port: 8080
+
+# runtimeRequestTimeout: 5s
+
+# syncFrequency: 5s
+# nodeStatusUpdateFrequency: 10s
+
+# concurrentInboundSyncs: 10
+# concurrentInboundGCSyncs: 10
+# concurrentUserSyncs: 50
+# concurrentUserGCSyncs: 10
+
+# maxInbounds: 110

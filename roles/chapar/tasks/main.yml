@@ -1,0 +1,51 @@
+---
+- name: Make Chapar configuration directory
+  file:
+    path: "{{ apadana_config_dir }}/chapar"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Make Chapar certs directory
+  file:
+    path: "{{ apadana_config_dir }}/pki/chapar"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Install certbot
+  package:
+    name: certbot
+    state: present
+
+- name: Obtain Chapar TLS cert
+  command: >
+    certbot certonly -q --standalone --keep
+    --preferred-challenges http
+    -d {{ ansible_host }}
+    --non-interactive --agree-tos --register-unsafely-without-email
+    --deploy-hook "cp /etc/letsencrypt/live/{{ ansible_host }}/fullchain.pem /etc/apadana/pki/chapar/server.crt && cp /etc/letsencrypt/live/{{ ansible_host }}/privkey.pem /etc/apadana/pki/chapar/server.key"
+  args:
+    creates: "{{ apadana_config_dir }}/pki/chapar/server.crt"
+
+- name: Make Chapar configuration file
+  template:
+    src: chapar.yml.j2
+    dest: "{{ apadana_config_dir }}/chapar/chapar.yml"
+    owner: root
+    group: root
+    mode: 0700
+  changed_when: true
+
+- name: Make Chapar systemd service
+  template:
+    src: chapar.service.j2
+    dest: "/etc/systemd/system/chapar.service"
+    owner: root
+    group: root
+    mode: 0644
+  changed_when: true
+  notify:
+    - Restart chapar

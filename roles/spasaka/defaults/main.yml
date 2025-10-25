@@ -1,0 +1,4 @@
+---
+concurrentNodeSyncs: 5
+nodeMonitorPeriod: 5s
+nodeMonitorGracePeriod: 20s

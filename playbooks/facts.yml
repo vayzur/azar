@@ -1,0 +1,62 @@
+---
+- name: Set apadana_apiserver_address globally
+  hosts: localhost
+  gather_facts: false
+  vars:
+    control_plane_group: "apadana_control_plane"
+    token_file: "~/.apadana/token"
+    apadana_apiserver_port: 10200
+  tasks:
+    - name: Determine API server address
+      set_fact:
+        apadana_apiserver_address: >-
+          {{ (loadbalancer_apiserver.address ~ ':' ~ (loadbalancer_apiserver.port | default(apadana_apiserver_port)))
+            if (loadbalancer_apiserver is defined and loadbalancer_apiserver.address is defined)
+            else (hostvars[groups[control_plane_group][0]].ansible_host ~ ':' ~ apadana_apiserver_port) | trim }}
+      run_once: true
+      tags:
+        - always
+
+    - name: Show chosen API server address
+      debug:
+        msg: "API Server Address: {{ apadana_apiserver_address }}"
+      tags:
+        - always
+
+    - name: Ensure Apadana token file exists
+      stat:
+        path: "{{ token_file }}"
+      register: token_stat
+      tags:
+        - always
+
+    - name: Generate Apadana cluster token if missing
+      command: cat /proc/sys/kernel/random/uuid
+      register: new_token
+      when: not token_stat.stat.exists
+      changed_when: true
+      tags:
+        - always
+
+    - name: Save generated token locally
+      copy:
+        content: "{{ new_token.stdout | default('') }}"
+        dest: "{{ token_file }}"
+        mode: '0600'
+      when: not token_stat.stat.exists
+      tags:
+        - always
+
+    - name: Read token from file
+      slurp:
+        src: "{{ token_file }}"
+      register: token_file_data
+      tags:
+        - always
+
+    - name: Set Apadana cluster token fact
+      set_fact:
+        apadana_cluster_shared_token: "{{ token_file_data.content | b64decode | trim }}"
+      run_once: true
+      tags:
+        - always

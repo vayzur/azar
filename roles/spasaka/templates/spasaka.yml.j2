@@ -1,0 +1,18 @@
+cluster:
+  server: "https://{{ hostvars['localhost'].apadana_apiserver_address | trim }}"
+  token: "{{ hostvars['localhost'].apadana_cluster_shared_token }}"
+
+etcd:
+  servers:
+{% for srv in etcd_servers | default([]) %}
+    - {{ srv }}
+{% endfor %}
+  tls:
+    enabled: {{ 'true' if apadana_spasaka_etcd_tls else 'false' }}
+    caFile: "{{ apadana_spasaka_etcd_ca_file }}"
+    certFile: "{{ apadana_spasaka_etcd_client_cert_file }}"
+    keyFile: "{{ apadana_spasaka_etcd_client_key_file }}"
+
+concurrentNodeSyncs: {{ concurrentNodeSyncs }}
+nodeMonitorPeriod: {{ nodeMonitorPeriod }}
+nodeMonitorGracePeriod: {{ nodeMonitorGracePeriod }}

@@ -1,0 +1,8 @@
+---
+- name: Restart spasaka
+  systemd:
+    name: spasaka
+    state: restarted
+    daemon_reload: true
+    enabled: true
+  ignore_errors: true

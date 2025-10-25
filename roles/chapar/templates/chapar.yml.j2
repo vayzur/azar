@@ -1,0 +1,20 @@
+address: 0.0.0.0
+port: {{ apadana_apiserver_port }}
+prefork: {{ 'true' if apadana_apiserver_prefork else 'false' }}
+token: "{{ hostvars['localhost'].apadana_cluster_shared_token }}"
+
+tls:
+  enabled: true
+  certFile: "{{ apadana_apiserver_cert_file }}"
+  keyFile: "{{ apadana_apiserver_key_file }}"
+
+etcd:
+  servers:
+{% for srv in etcd_servers | default([]) %}
+    - {{ srv }}
+{% endfor %}
+  tls:
+    enabled: {{ 'true' if apadana_apiserver_etcd_tls else 'false' }}
+    caFile: "{{ apadana_apiserver_etcd_ca_file }}"
+    certFile: "{{ apadana_apiserver_etcd_client_cert_file }}"
+    keyFile: "{{ apadana_apiserver_etcd_client_key_file }}"

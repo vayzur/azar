@@ -1,0 +1,16 @@
+[Unit]
+Description=Chapar
+After=network.target
+StartLimitIntervalSec=30s
+StartLimitBurst=5
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+TimeoutStartSec=5s
+
+ExecStart={{ bin_dir }}/chapar -config {{ apadana_config_dir }}/chapar/chapar.yml
+
+[Install]
+WantedBy=multi-user.target

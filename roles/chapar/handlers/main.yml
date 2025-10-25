@@ -1,0 +1,8 @@
+---
+- name: Restart chapar
+  systemd:
+    name: chapar
+    state: restarted
+    daemon_reload: true
+    enabled: true
+  ignore_errors: true

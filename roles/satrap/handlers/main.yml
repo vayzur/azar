@@ -1,0 +1,8 @@
+---
+- name: Restart satrap
+  systemd:
+    name: satrap
+    state: restarted
+    daemon_reload: true
+    enabled: true
+  ignore_errors: true

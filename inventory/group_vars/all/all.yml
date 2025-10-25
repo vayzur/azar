@@ -1,0 +1,11 @@
+---
+apadana_version: v0.4.4
+
+bin_dir: /usr/local/bin
+
+apadana_config_dir: /etc/apadana
+
+# apiserver_loadbalancer_domain_name: "elb.some.domain"
+# loadbalancer_apiserver:
+#   address: 1.2.3.4
+#   port: 10200

@@ -1,0 +1,7 @@
+---
+- name: Install and configure Spasaka
+  hosts: apadana_control_plane
+  strategy: free
+  become: true
+  roles:
+    - { role: spasaka, tags: spasaka }

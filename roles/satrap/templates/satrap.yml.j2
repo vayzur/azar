@@ -1,0 +1,30 @@
+registerNode: true
+
+labels:
+  env: "prod"
+  version: "{{ apadana_version }}"
+
+addresses:
+  - type: InternalAddress
+    address: "{{ ansible_host }}"
+  - type: ExternalAddress
+    address: "{{ public_gate }}"
+
+xray:
+  address: {{ xray_address }}
+  port: {{ xray_port }}
+  runtimeRequestTimeout: {{ runtimeRequestTimeout }}
+
+cluster:
+  server: "https://{{ hostvars['localhost'].apadana_apiserver_address | trim }}"
+  token: "{{ hostvars['localhost'].apadana_cluster_shared_token }}"
+
+syncFrequency: {{ syncFrequency }}
+nodeStatusUpdateFrequency: {{ nodeStatusUpdateFrequency }}
+
+concurrentInboundSyncs: {{ concurrentInboundSyncs }}
+concurrentInboundGCSyncs: {{ concurrentInboundGCSyncs }}
+concurrentUserSyncs: {{ concurrentUserSyncs }}
+concurrentUserGCSyncs: {{ concurrentUserGCSyncs }}
+
+maxInbounds: {{ maxInbounds }}

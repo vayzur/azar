@@ -1,0 +1,7 @@
+---
+- name: Install and configure Chapar
+  hosts: apadana_control_plane
+  strategy: free
+  become: true
+  roles:
+    - { role: chapar, tags: chapar }
