@@ -27,7 +27,7 @@ ansible-playbook -i inventory/hosts.yml cluster.yml
 
 ## Customize Ansible vars
 
-Kubespray expects users to use one of the following variables sources for settings and customization:
+Azar expects users to use one of the following variables sources for settings and customization:
 
 | Layer                                  | Comment                                                                      |
 |----------------------------------------|------------------------------------------------------------------------------|
